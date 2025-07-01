@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { BudgetContext } from '../context/BudgetContext'
 
+// We use this custom hook to export the context in other components
 export const useBudget = () => {
   const context = useContext(BudgetContext)
   if (!context) {
