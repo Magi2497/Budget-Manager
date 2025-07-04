@@ -14,6 +14,7 @@ export default function ExpenseList() {
       ) : (
         <>
           <p className="text-gray-600 text-2xl font-bold"> Expenses list </p>
+
           {state.expenses.map(expense => (
             <ExpenseDetail key={expense.id} expense={expense} />
           ))}
