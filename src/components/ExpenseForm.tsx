@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { DraftExpense, Value } from '../types'
 import { categories } from '../data/categories'
 import ErrorMessage from './ErrorMessage'
@@ -16,7 +16,17 @@ export default function ExpenseForm() {
   })
 
   const [error, setError] = useState('')
-  const { dispatch } = useBudget()
+  const { dispatch, state } = useBudget()
+
+  useEffect(() => {
+    if (state.editingId) {
+      const editingExpense = state.expenses.filter(
+        expense => expense.id === state.editingId,
+      )[0]
+
+      setExpense(editingExpense)
+    }
+  }, [state.editingId, state.expenses])
 
   const handleChange = (
     e:
@@ -48,8 +58,15 @@ export default function ExpenseForm() {
       setError('All fields are required')
       return
     }
-    // Add a new expense
-    dispatch({ type: 'add-expense', payload: { expense } })
+    // Add or update a expense
+    if (state.editingId) {
+      dispatch({
+        type: 'update-expense',
+        payload: { expense: { id: state.editingId, ...expense } },
+      })
+    } else {
+      dispatch({ type: 'add-expense', payload: { expense } })
+    }
 
     // Restart the state
 
