@@ -16,7 +16,8 @@ export default function ExpenseForm() {
   })
 
   const [error, setError] = useState('')
-  const { dispatch, state } = useBudget()
+  const [previousAmount, setPreviousAmount] = useState(0)
+  const { dispatch, state, remainingBudget } = useBudget()
 
   useEffect(() => {
     if (state.editingId) {
@@ -25,6 +26,7 @@ export default function ExpenseForm() {
       )[0]
 
       setExpense(editingExpense)
+      setPreviousAmount(editingExpense.amount)
     }
   }, [state.editingId, state.expenses])
 
@@ -58,6 +60,14 @@ export default function ExpenseForm() {
       setError('All fields are required')
       return
     }
+
+    // Validate that the budget limit is not exceeded
+
+    if (expense.amount - previousAmount > remainingBudget) {
+      setError('You don’t have enough budget for this expense')
+      return
+    }
+
     // Add or update a expense
     if (state.editingId) {
       dispatch({
@@ -76,6 +86,8 @@ export default function ExpenseForm() {
       category: '',
       date: new Date(),
     })
+
+    setPreviousAmount(0)
   }
 
   return (
