@@ -59,7 +59,10 @@ export default function ExpenseDetail({ expense }: ExpenseDetailProps) {
         leadingActions={leadingActions()}
         trailingActions={trailingActions()}
       >
-        <div className="relative w-full bg-white shadow-lg p-6 border-b border-gray-200 flex gap-5 items-center rounded-lg overflow-hidden">
+        <div
+          className="
+        relative w-full bg-white shadow-lg p-6 border-b border-gray-200 flex gap-5 items-center rounded-lg overflow-hidden"
+        >
           <div className=" left-2 top-1/2 -translate-y-1/2 flex items-center text-blue-500 text-xs font-medium gap-1 pointer-events-none">
             <ChevronDoubleLeftIcon className="w-4 h-4" />
             Edit
