@@ -20,6 +20,7 @@ export type BudgetActions =
       type: 'update-expense'
       payload: { expense: Expense }
     }
+  | { type: 'reset-app' }
 export type BudgetState = {
   budget: number
   modal: boolean
@@ -114,6 +115,14 @@ export const budgetReducer = (
       ),
       modal: false,
       editingId: '',
+    }
+  }
+
+  if (action.type === 'reset-app') {
+    return {
+      ...state,
+      expenses: [],
+      budget: 0,
     }
   }
   return state
