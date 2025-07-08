@@ -1,69 +1,34 @@
-# React + TypeScript + Vite
+# 💰 Budget Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Budget Manager is a responsive React + TypeScript application that helps users manage their personal finances. You can set a budget, register and categorize expenses, track your spending, and get visual feedback on how much of your budget remains.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Set and update your total budget
+- Add, edit, and delete categorized expenses
+- Filter expenses by category
+- Visual indicator of spending percentage with dynamic color change
+- Reset app functionality to start over
+- Responsive design optimized for desktop and mobile
+- ✅ Built with **TypeScript** for type safety and maintainability
+- ✅ State managed with **useReducer** and shared globally with **useContext**
 
-## Expanding the ESLint configuration
+## 🛠️ Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React** – Component-based UI building and dynamic rendering
+- **TypeScript** – Static typing for robust and scalable development
+- **Tailwind CSS** – Utility-first CSS framework for fast and responsive UI
+- **Vite** – Blazing fast dev server and bundler
+- **npm** – Package and dependency management
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 📂 Folder Structure
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- `src/components/` – Reusable UI components (budget form, expense list, etc.)
+- `src/context/` and `src/provider/` – Global state logic with reducer and context
+- `src/types/` – Centralized type definitions
+- `src/helpers/` – Utility functions for calculations and formatting
+- `src/reducer/` – Logic of the hook reducer
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🔗 Live Demo
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+👉 [Click here to view the live demo](https://budget-manager-2497.netlify.app/)
