@@ -13,7 +13,6 @@ export default function ExpenseModal() {
           <PlusCircleIcon className="w-16 h-16 text-blue-600 rounded-full" />
         </button>
       </div>
-      submitted. We’ve sent you an email with all of the details of your order.
       <Transition appear show={state.modal} as={Fragment}>
         <Dialog
           as="div"
