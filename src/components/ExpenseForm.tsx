@@ -1,101 +1,101 @@
-import { useState, useEffect } from 'react'
-import type { DraftExpense, Value } from '../types'
-import { categories } from '../data/categories'
-import ErrorMessage from './ErrorMessage'
-import DatePicker from 'react-date-picker'
-import 'react-date-picker/dist/DatePicker.css'
-import 'react-calendar/dist/Calendar.css'
-import { useBudget } from '../hooks/useBudget'
+import { useState, useEffect } from "react";
+import type { DraftExpense, Value } from "../types";
+import { categories } from "../data/categories";
+import ErrorMessage from "./ErrorMessage";
+import DatePicker from "react-date-picker";
+import "react-date-picker/dist/DatePicker.css";
+import "react-calendar/dist/Calendar.css";
+import { useBudget } from "../hooks/useBudget";
 
 export default function ExpenseForm() {
   const [expense, setExpense] = useState<DraftExpense>({
     amount: 0,
-    expenseName: '',
-    category: '',
+    expenseName: "",
+    category: "",
     date: new Date(),
-  })
+  });
 
-  const [error, setError] = useState('')
-  const [previousAmount, setPreviousAmount] = useState(0)
-  const { dispatch, state, remainingBudget } = useBudget()
+  const [error, setError] = useState("");
+  const [previousAmount, setPreviousAmount] = useState(0);
+  const { dispatch, state, remainingBudget } = useBudget();
 
   useEffect(() => {
     if (state.editingId) {
       const editingExpense = state.expenses.filter(
-        expense => expense.id === state.editingId,
-      )[0]
+        (expense) => expense.id === state.editingId,
+      )[0];
 
-      setExpense(editingExpense)
-      setPreviousAmount(editingExpense.amount)
+      setExpense(editingExpense);
+      setPreviousAmount(editingExpense.amount);
     }
-  }, [state.editingId, state.expenses])
+  }, [state.editingId, state.expenses]);
 
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLSelectElement>,
   ) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
 
-    const isAmountField = ['amount'].includes(name)
+    const isAmountField = ["amount"].includes(name);
 
     setExpense({
       ...expense,
       [name]: isAmountField ? +value : value,
-    })
-  }
+    });
+  };
 
   const handleChangeDate = (value: Value) => {
     setExpense({
       ...expense,
       date: value,
-    })
-  }
+    });
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
 
     // Validate
-    if (Object.values(expense).includes('')) {
-      setError('All fields are required')
-      return
+    if (Object.values(expense).includes("")) {
+      setError("All fields are required");
+      return;
     }
 
     // Validate that the budget limit is not exceeded
 
     if (expense.amount - previousAmount > remainingBudget) {
-      setError('You don’t have enough budget for this expense')
-      return
+      setError("You don’t have enough budget for this expense");
+      return;
     }
 
     // Add or update a expense
     if (state.editingId) {
       dispatch({
-        type: 'update-expense',
+        type: "update-expense",
         payload: { expense: { id: state.editingId, ...expense } },
-      })
+      });
     } else {
-      dispatch({ type: 'add-expense', payload: { expense } })
+      dispatch({ type: "add-expense", payload: { expense } });
     }
 
     // Restart the state
 
     setExpense({
       amount: 0,
-      expenseName: '',
-      category: '',
+      expenseName: "",
+      category: "",
       date: new Date(),
-    })
+    });
 
-    setPreviousAmount(0)
-  }
+    setPreviousAmount(0);
+  };
 
   return (
     <form className="space-y-5" onSubmit={handleSubmit}>
       <legend className="uppercase text-center text-2xl font-black border-b-4 border-blue-500 py-2">
         {state.editingId
           ? `Update expense: ${expense.expenseName}`
-          : 'New Expense'}
+          : "New Expense"}
       </legend>
       {error && <ErrorMessage> {error}</ErrorMessage>}
       <div className=" flex flex-col gap-2">
@@ -141,7 +141,7 @@ export default function ExpenseForm() {
           onChange={handleChange}
         >
           <option value="">-- Select --</option>
-          {categories.map(category => (
+          {categories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
             </option>
@@ -153,7 +153,7 @@ export default function ExpenseForm() {
             Expense Date:
           </label>
           <DatePicker
-            className="bg-slate-100 p-2 border-0"
+            className="bg-slate-100 z-50 p-2 border-0"
             value={expense.date}
             onChange={handleChangeDate}
           />
@@ -162,9 +162,9 @@ export default function ExpenseForm() {
         <input
           type="submit"
           className="bg-blue-600 cursor-pointer w-full p-2 text-white uppercase font-bold rounded-lg"
-          value={state.editingId ? 'Update expense' : 'Add Expense'}
+          value={state.editingId ? "Update expense" : "Add Expense"}
         />
       </div>
     </form>
-  )
+  );
 }
